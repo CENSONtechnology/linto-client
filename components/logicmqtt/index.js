@@ -32,6 +32,11 @@ class LogicMqtt extends EventEmitter {
                 "connexion": "online",
                 "on": new Date().toJSON()
             }, 0, true)
+
+            app.localmqtt.publish((`connected`, { //send retained connected status
+                "connexion": "online",
+                "on": new Date().toJSON()
+            }, 0, true))
         })
         return this.init(app)
     }
@@ -46,6 +51,7 @@ class LogicMqtt extends EventEmitter {
                 console.error("broker error : " + e)
             })
             this.client.on("connect", () => {
+                this.emit(`${moduleName}::connect`)
                 //clear any previous subsciptions
                 this.client.unsubscribe(this.subTopic, (err) => {
                     if (err) debug('disconnecting while unsubscribing', err)
@@ -62,8 +68,11 @@ class LogicMqtt extends EventEmitter {
             })
             this.client.once("connect", () => {
                 clearTimeout(cnxError)
-                this.emit(`${moduleName}::connect`)
                 this.client.on("offline", () => {
+                    app.localmqtt.publish((`disconnected`, { //send retained connected status
+                        "connexion": "offline",
+                        "on": new Date().toJSON()
+                    }, 0, true))
                     debug("broker connexion down")
                 })
                 app[moduleName] = this

@@ -16,6 +16,13 @@ function logicMqttActions(app) {
                 }, 0)
             } else return
         }
+        if (!!message.topicArray && message.topicArray[3] === "say") {
+            // Basic say for demo purpose
+                app.localmqtt.publish("say", {
+                    "value": message.behavior.say,
+                    "on": new Date().toJSON()
+                }, 0)
+        }
     })
 }
 
