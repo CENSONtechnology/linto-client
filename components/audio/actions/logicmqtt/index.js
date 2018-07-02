@@ -10,7 +10,7 @@ function logicMqttActions(app) {
             // Do i still wait for this file to get processed ?
             if (this.nlpProcessing.includes(message.topicArray[5])) {
                 this.nlpProcessing = this.nlpProcessing.filter(e => e !== message.topicArray[5]) //removes from array of files to process
-                app.localmqtt.publish("say", message.value, 0)
+                app.localmqtt.publish("say", message.behavior.say, 0)
             } else return
         }
     })
