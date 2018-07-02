@@ -1,0 +1,25 @@
+# Components loading in this order
+COMPONENTS = localmqtt,logicmqtt,audio
+
+# Local MQTT bus setup
+LOCAL_MQTT_ADDRESS = 127.0.0.1
+LOCAL_MQTT_PORT = 8003
+LOCAL_MQTT_KEEP_ALIVE = 2
+
+# Remote server MQTT
+# Logic server
+# Exploitation server
+LOGIC_MQTT_ADDRESS = 127.0.0.1
+LOGIC_MQTT_PORT = 8003
+LOGIC_MQTT_KEEP_ALIVE = 2
+EXPLOITATION_MQTT_ADDRESS = 10.31.0.114
+EXPLOITATION_MQTT_PORT = 1883
+EXPLOITATION_MQTT_KEEP_ALIVE = 2
+
+# Business logic server MQTT
+
+
+# Audio and Mic
+AUDIO_FILE = /tmp/command.raw
+BUSINESS_LOGIC_MQTT_ADDRESS = localhost
+BUSINESS_LOGIC_MQTT_PORT = 8888
