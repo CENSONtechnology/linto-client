@@ -12,7 +12,7 @@ function logicMqttActions(app) {
                 this.nlpProcessing = this.nlpProcessing.filter(e => e !== message.topicArray[5]) //removes from array of files to process
                 app.localmqtt.publish("say", {
                     "value": message.behavior.say,
-                    "on": new Date.toJSON()
+                    "on": new Date().toJSON()
                 }, 0)
             } else return
         }
