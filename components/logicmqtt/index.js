@@ -72,7 +72,7 @@ class LogicMqtt extends EventEmitter {
                     app.localmqtt.publish(`disconnected`, { //send retained connected status
                         "connexion": "offline",
                         "on": new Date().toJSON()
-                    }, 0, true)
+                    }, 0, false)
                     debug("broker connexion down")
                 })
                 app[moduleName] = this
