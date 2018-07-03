@@ -31,7 +31,7 @@ class LocalMqtt extends EventEmitter {
             this.publish('status', { //send retained online status
                 "connexion": "online",
                 "on": new Date().toJSON()
-            }, 2, true)
+            }, 0, true)
         })
         return this.init(app)
     }
@@ -46,6 +46,7 @@ class LocalMqtt extends EventEmitter {
                 console.error("broker error : " + e)
             })
             this.client.on("connect", () => {
+                this.emit(`${moduleName}::connect`)
                 //clear any previous subsciptions
                 this.subTopics.map((topic) => {
                     this.client.unsubscribe(topic, (err) => {
@@ -64,8 +65,8 @@ class LocalMqtt extends EventEmitter {
             })
             this.client.once("connect", () => {
                 clearTimeout(cnxError)
-                app[moduleName] = this
                 this.emit(`${moduleName}::connect`)
+                app[moduleName] = this
                 this.client.on("offline", () => {
                     debug("broker connexion down")
                 })

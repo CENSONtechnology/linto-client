@@ -33,10 +33,10 @@ class LogicMqtt extends EventEmitter {
                 "on": new Date().toJSON()
             }, 0, true)
 
-            app.localmqtt.publish((`connected`, { //send retained connected status
+            app.localmqtt.publish(`connected`, { //send retained connected status in lintoclient/connected
                 "connexion": "online",
                 "on": new Date().toJSON()
-            }, 0, true))
+            }, 0, true)
         })
         return this.init(app)
     }
@@ -69,10 +69,10 @@ class LogicMqtt extends EventEmitter {
             this.client.once("connect", () => {
                 clearTimeout(cnxError)
                 this.client.on("offline", () => {
-                    app.localmqtt.publish((`disconnected`, { //send retained connected status
+                    app.localmqtt.publish(`disconnected`, { //send retained connected status
                         "connexion": "offline",
                         "on": new Date().toJSON()
-                    }, 0, true))
+                    }, 0, true)
                     debug("broker connexion down")
                 })
                 app[moduleName] = this

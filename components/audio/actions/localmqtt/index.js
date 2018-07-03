@@ -1,6 +1,8 @@
 /**
  * Actions for audio component triggered by the localmqtt component 
  */
+const debug = require('debug')(`linto-client:audio:actionsFromLocalMQTT`)
+
 function localMqttActions(app) {
     if (!app.localmqtt || !app.logicmqtt) return
 
@@ -9,13 +11,16 @@ function localMqttActions(app) {
     })
 
     app.localmqtt.on("localmqtt::utterance/stop", async (payload) => {
+        debug("")
         // "this" is the bound Audio app component
         const audioStream = this.mic.readStream()
+        const audioRequestID = await app.logicmqtt.publishaudio(audioStream)
+        // Notify for noew request beign sent
         app.localmqtt.publish("request/send", {
-            "on": new Date().toJSON()
+            "on": new Date().toJSON(),
+            "requestId": audioRequestID
         }, 0, false)
-        const audioFileId = await app.logicmqtt.publishaudio(audioStream)
-        this.nlpProcessing.push(audioFileId)
+        this.nlpProcessing.push(audioRequestID)
     })
 }
 

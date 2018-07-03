@@ -1,10 +1,12 @@
 /**
  * Actions for audio component triggered by the logicmqtt component 
  */
+const debug = require('debug')(`linto-client:audio:actionsFromLogicMQTT`)
 
 function logicMqttActions(app) {
     if (!app.localmqtt || !app.logicmqtt) return
     app.logicmqtt.on('logicmqtt::message', (message) => {
+        debug("Received %O", message)
         // NLP file Processed
         if (!!message.topicArray && message.topicArray[3] === "nlp" && message.topicArray[4] === "file" && !!message.topicArray[5]) {
             // Do i still wait for this file to get processed ?
