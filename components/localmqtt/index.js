@@ -65,7 +65,6 @@ class LocalMqtt extends EventEmitter {
             })
             this.client.once("connect", () => {
                 clearTimeout(cnxError)
-                this.emit(`${moduleName}::connect`)
                 app[moduleName] = this
                 this.client.on("offline", () => {
                     debug("broker connexion down")

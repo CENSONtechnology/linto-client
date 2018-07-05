@@ -11,7 +11,7 @@ function localMqttActions(app) {
     })
 
     app.localmqtt.on("localmqtt::utterance/stop", async (payload) => {
-        debug("")
+        if (payload.reason === "canceled") return
         // "this" is the bound Audio app component
         const audioStream = this.mic.readStream()
         const audioRequestID = await app.logicmqtt.publishaudio(audioStream)
