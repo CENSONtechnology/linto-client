@@ -1,5 +1,5 @@
 /**
- * Actions for audio component triggered by the logicmqtt component 
+ * Actions for audio component triggered by the logicmqtt component
  */
 const debug = require('debug')(`linto-client:audio:actionsFromLogicMQTT`)
 
@@ -16,6 +16,12 @@ function logicMqttActions(app) {
                     "value": message.behavior.say,
                     "on": new Date().toJSON()
                 }, 0)
+                if (!!message.behavior.action) {
+                  app.localmqtt.publish("action", {
+                      "value": message.behavior.action,
+                      "on": new Date().toJSON()
+                  }, 0)
+                }
             } else return
         }
         if (!!message.topicArray && message.topicArray[3] === "say") {
